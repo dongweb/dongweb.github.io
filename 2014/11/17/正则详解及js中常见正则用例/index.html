@@ -1,0 +1,927 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="正则,正则用例,">
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="正则表达式是由一些具有特殊含义的字符组成的字符串，多用于查找、替换符合规则的字符串。在表单验证、Url映射等处都会经常用到:  匹配除换行符以外的任意字符   \w 匹配字母或数字或下划线或汉字   \s 匹配任意的空白符   \d 匹配数字   \b 匹配单词的开始或结束   ^ 匹配字符串的开始（在集合字符里[^a]表示非（不匹配）的意思   $ 匹配字符串的结束    匹配任何任意字符 例如">
+<meta name="keywords" content="正则,正则用例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则详解及js中常见正则用例">
+<meta property="og:url" content="http://dongweb.me/2014/11/17/正则详解及js中常见正则用例/index.html">
+<meta property="og:site_name" content="董久龙的博客">
+<meta property="og:description" content="正则表达式是由一些具有特殊含义的字符组成的字符串，多用于查找、替换符合规则的字符串。在表单验证、Url映射等处都会经常用到:  匹配除换行符以外的任意字符   \w 匹配字母或数字或下划线或汉字   \s 匹配任意的空白符   \d 匹配数字   \b 匹配单词的开始或结束   ^ 匹配字符串的开始（在集合字符里[^a]表示非（不匹配）的意思   $ 匹配字符串的结束    匹配任何任意字符 例如">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2015-08-10T15:23:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则详解及js中常见正则用例">
+<meta name="twitter:description" content="正则表达式是由一些具有特殊含义的字符组成的字符串，多用于查找、替换符合规则的字符串。在表单验证、Url映射等处都会经常用到:  匹配除换行符以外的任意字符   \w 匹配字母或数字或下划线或汉字   \s 匹配任意的空白符   \d 匹配数字   \b 匹配单词的开始或结束   ^ 匹配字符串的开始（在集合字符里[^a]表示非（不匹配）的意思   $ 匹配字符串的结束    匹配任何任意字符 例如">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 正则详解及js中常见正则用例 | 董久龙的博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">董久龙的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Ex6ZCe4NsRHK-NaX5yfU','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              正则详解及js中常见正则用例
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-17T16:15:53+08:00" content="2014-11-17">
+            2014-11-17
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/正则/" itemprop="url" rel="index">
+                  <span itemprop="name">正则</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/17/正则详解及js中常见正则用例/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/17/正则详解及js中常见正则用例/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>正则表达式是由一些具有特殊含义的字符组成的字符串，多用于查找、替换符合规则的字符串。在表单验证、Url映射等处都会经常用到:</p>
+<ul>
+<li>匹配除换行符以外的任意字符  </li>
+<li>\w 匹配字母或数字或下划线或汉字  </li>
+<li>\s 匹配任意的空白符  </li>
+<li>\d 匹配数字  </li>
+<li>\b 匹配单词的开始或结束  </li>
+<li>^ 匹配字符串的开始（在集合字符里[^a]表示非（不匹配）的意思  </li>
+<li>$ 匹配字符串的结束 </li>
+</ul>
+<ol>
+<li>匹配任何任意字符 例如 . 可以匹配 1，n，*，+，- ,等  </li>
+<li>\d\w\s 匹配第一个字符为数字，第二个字符为字母或数字、或下划线或汉字，第三字符为空格的字符串 例如：11 ，2a , 1_</li>
+<li>^\d\d\d$ 匹配三个全部都为数字的字符串 例如： 123,456,789</li>
+<li>还可以用于验证输入的字符串是否符合qq（身份证号）的验证 ：<br>例如：^\d{8}$ 匹配8位数字的qq号，^\d{15}&amp;匹配15位均为数字的身份证号</li>
+<li>\bOlive\b 匹配单词Olive 例如： I Love Oliver and Olive .这个时候返回的是Olive 而不是Oliver,因为\b….\b返回的匹配的单词  </li>
+</ol>
+<p>反义字符：多用于查找除某个字符以外其他任意字符均可以的情况</p>
+<ul>
+<li>\W 匹配任意不是字母，数字，下划线，汉字的字符</li>
+<li>\S 匹配任意不是空白符的字符</li>
+<li>\D 匹配任意非数字的字符</li>
+<li>\B 匹配不是单词开头或结束的位置</li>
+<li>[^x] 匹配除了x以外的任意字符</li>
+<li>\W 匹配除字母、数字、下划线、汉字以为的字符形如 +，-，*</li>
+<li>\S 匹配除空格以外的任意字符形如：1，* ，）</li>
+<li>[^abcde]匹配除abcde以为的其他字符 如 e，f，g，h</li>
+</ul>
+<p>限定字符多用于重复匹配次数</p>
+<p>常用的限定字符如下</p>
+<p>代码/语法 说明</p>
+<ul>
+<li>重复零次或更多次</li>
+<li>重复一次或更多次<br>? 重复零次或一次<br>{n} 重复n次<br>{n,} 重复n次或更多次<br>{n,m} 重复n到m次</li>
+</ul>
+<p>(1)\d* 匹配重复0次或多次数字 例如:可能为空 或 任意数字（2,3,…..）</p>
+<p>(2)\d+ 匹配重复1次或多次数字 例如:可能为1个或多个数字 1,23,234,2345，……..</p>
+<p>(3)\d? 匹配重复次个或者一次数字 例如：可能为空或者任意的一个数字（1,2，…..）</p>
+<p>(4)\d{8}匹配重复8次数字 例如：123456768</p>
+<p>(5)\d{4,}匹配重复至少4次数字 例如：1234,12345,124244,…..</p>
+<p>(6)^\d{8,11}$匹配重复8-11次数字 例如：12345678,123456789,1234567890,12345678901</p>
+<p>在实际的开发中，可能会遇到要比配元字符的情况，这个时候就需要进行字符转义，如元字符 . \ 需要转换为. \ \</p>
+<p>例如： 需要匹配qq邮箱 \d{8,}+qq+.+com 在这里的. 就需要加斜杠</p>
+<p>字符分枝多用于满足不同情况的选择，用“|”将不同的条件分割开来，比如有些固定电话区号有三位，有些有四位，这个时候可以采用字符分枝</p>
+<p>例如：\d{3}-\d{8}|\d{4}-\d{8} 可以匹配两种不同长度区号的固定电话</p>
+<p>字符分组多用于将多个字符重复，主要通过使用小括号()来进行分组</p>
+<p>形如：（\d\w){3} 重复匹配3次（\d\w)</p>
+<p>常用于表示IP地址 形如： ((25[0-5]|2[0-4][0-9]|[0-1]\d\d).){3}(25[0-5]|2[0-4][0-9]|[0-1]\d\d)</p>
+<p>解析：先把IP地址分为两部分一部分是123.123.123. 另一部分是123，又因Ip最大值为255，所以先使用分组，然后在组里边再进行选择，组里也有三部分，0-199,200-249,250-255，分别和上述的表达是对应，最后还要注意分组之后还要加上一个.，因为是元字符所以要转义故加上. 然后再把这部分整体看做是一个组，重复三次，再加上仅有数字的一组也就是不带.的那一组即可完成IP地址的校验</p>
+<ul>
+<li>捕获<ul>
+<li>(exp) 匹配exp,并捕获文本到自动命名的组里</li>
+<li>(?exp) 匹配exp,并捕获文本到名称为name的组里，也可以写成(?’name’exp)</li>
+<li>(?:exp) 匹配exp,不捕获匹配的文本，也不给此分组分配组号</li>
+</ul>
+</li>
+<li>零宽断言<ul>
+<li>(?=exp) 匹配exp前面的位置<ul>
+<li>(?&lt;=exp) 匹配exp后面的位置</li>
+</ul>
+</li>
+<li>(?!exp) 匹配后面跟的不是exp的位置<ul>
+<li>(?&lt;!exp) 匹配前面不是exp的位置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>(?#comment) 这种类型的分组不对正则表达式的处理产生任何影响，用于提供注释让人阅读</li>
+</ul>
+</li>
+</ul>
+<p>贪婪匹配：正则表达式中包含重复的限定符时，通常的行为是匹配尽可能多的字符。<br>懒惰匹配，有时候需要匹配尽可能少的字符。</p>
+<p>例如：</p>
+<ul>
+<li><p>a.*b，它将会匹配最长的以a开始，以b结束的字符串。如果用它来搜索aabab的话，它会匹配整个字符串aabab。</p>
+</li>
+<li><p>但是我们此时可能需要匹配的是ab这样的话就需要用到懒惰匹配了。懒惰匹配会匹配尽可能少的字符  </p>
+<p>常用的懒惰匹配限定符如下:</p>
+<ul>
+<li>*? 重复任意次，但尽可能少重复</li>
+<li>+? 重复1次或更多次，但尽可能少重复</li>
+<li>?? 重复0次或1次，但尽可能少重复</li>
+<li>{n,m}? 重复n到m次，但尽可能少重复</li>
+<li>{n,}? 重复n次以上，但尽可能少重复</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>只能输入数字：”^[0-9]*$”。</p>
+</li>
+<li><p>只能输入n位的数字：”^”d{n}$”。</p>
+</li>
+<li><p>只能输入至少n位的数字：”^”d{n,}$”。</p>
+</li>
+<li><p>只能输入m~n位的数字：。”^”d{m,n}$”</p>
+</li>
+<li><p>只能输入零和非零开头的数字：”^(0|[1-9][0-9]*)$”。</p>
+</li>
+<li><p>只能输入有两位小数的正实数：”^[0-9]+(.[0-9]{2})?$”。</p>
+</li>
+<li><p>只能输入有1~3位小数的正实数：”^[0-9]+(.[0-9]{1,3})?$”。</p>
+</li>
+<li><p>只能输入非零的正整数：”^”+?[1-9][0-9]*$”。</p>
+</li>
+<li><p>只能输入非零的负整数：”^”-[1-9][]0-9”*$。</p>
+</li>
+<li><p>只能输入长度为3的字符：”^.{3}$”。</p>
+</li>
+<li><p>只能输入由26个英文字母组成的字符串：”^[A-Za-z]+$”。</p>
+</li>
+<li><p>只能输入由26个大写英文字母组成的字符串：”^[A-Z]+$”。</p>
+</li>
+<li><p>只能输入由26个小写英文字母组成的字符串：”^[a-z]+$”。</p>
+</li>
+<li><p>只能输入由数字和26个英文字母组成的字符串：”^[A-Za-z0-9]+$”。</p>
+</li>
+<li><p>只能输入由数字、26个英文字母或者下划线组成的字符串：”^”w+$”。</p>
+</li>
+<li><p>验证用户密码：”^[a-zA-Z]”w{5,17}$”正确格式为：以字母开头，长度在6~18之间，只能包含字符、数字和下划线。</p>
+</li>
+<li><p>验证是否含有^%&amp;’,;=?$””等字符：”[^%&amp;’,;=?$”x22]+”。</p>
+</li>
+<li><p>只能输入汉字：”^[“u4e00-“u9fa5]{0,}$”</p>
+</li>
+<li><p>验证Email地址：”^”w+([-+.]”w+)@”w+([-.]”w+)“.”w+([-.]”w+)*$”。</p>
+</li>
+<li><p>验证URL：”^<a href="http://([&quot;w-]+&quot;.)+[&quot;w-]+(/[&quot;w-./?%&amp;=]*)?$&quot;。" target="_blank" rel="noopener">http://([&quot;w-]+&quot;.)+[&quot;w-]+(/[&quot;w-./?%&amp;=]*)?$&quot;。</a></p>
+</li>
+<li><p>验证电话号码：”^(“(“d{3,4}-)|”d{3.4}-)?”d{7,8}$”正确格式为：”XXX-XXXXXXX”、”XXXX- XXXXXXXX”、”XXX-XXXXXXX”、”XXX-XXXXXXXX”、”XXXXXXX”和”XXXXXXXX”。</p>
+</li>
+<li><p>验证身份证号(15位或18位数字)：”^”d{15}|”d{18}$”。</p>
+</li>
+<li><p>验证一年的12个月：”^(0?[1-9]|1[0-2])$”正确格式为：”01”～”09”和”1”～”12”。</p>
+</li>
+<li><p>验证一个月的31天：”^((0?[1-9])|((1|2)[0-9])|30|31)$”正确格式为;”01”～”09”和”1”～”31”。</p>
+</li>
+</ul>
+<p>—正则表达式是由一些具有特殊含义的字符组成的字符串，多用于查找、替换符合规则的字符串。在表单验证、Url映射等处都会经常用到:  </p>
+<ul>
+<li>匹配除换行符以外的任意字符  </li>
+<li>\w 匹配字母或数字或下划线或汉字  </li>
+<li>\s 匹配任意的空白符  </li>
+<li>\d 匹配数字  </li>
+<li>\b 匹配单词的开始或结束  </li>
+<li>^ 匹配字符串的开始（在集合字符里[^a]表示非（不匹配）的意思  </li>
+<li>$ 匹配字符串的结束 </li>
+</ul>
+<ol>
+<li>匹配任何任意字符 例如 . 可以匹配 1，n，*，+，- ,等  </li>
+<li>\d\w\s 匹配第一个字符为数字，第二个字符为字母或数字、或下划线或汉字，第三字符为空格的字符串 例如：11 ，2a , 1_</li>
+<li>^\d\d\d$ 匹配三个全部都为数字的字符串 例如： 123,456,789</li>
+<li>还可以用于验证输入的字符串是否符合qq（身份证号）的验证 ：<br>例如：^\d{8}$ 匹配8位数字的qq号，^\d{15}&amp;匹配15位均为数字的身份证号</li>
+<li>\bOlive\b 匹配单词Olive 例如： I Love Oliver and Olive .这个时候返回的是Olive 而不是Oliver,因为\b….\b返回的匹配的单词  </li>
+</ol>
+<p>   反义字符：多用于查找除某个字符以外其他任意字符均可以的情况</p>
+<ul>
+<li>\W 匹配任意不是字母，数字，下划线，汉字的字符</li>
+<li>\S 匹配任意不是空白符的字符</li>
+<li>\D 匹配任意非数字的字符</li>
+<li>\B 匹配不是单词开头或结束的位置</li>
+<li>[^x] 匹配除了x以外的任意字符</li>
+<li>\W 匹配除字母、数字、下划线、汉字以为的字符形如 +，-，*</li>
+<li>\S 匹配除空格以外的任意字符形如：1，* ，）</li>
+<li><p>[^abcde]匹配除abcde以为的其他字符 如 e，f，g，h</p>
+<p>限定字符多用于重复匹配次数</p>
+<p>常用的限定字符如下</p>
+<p>代码/语法 说明</p>
+</li>
+</ul>
+<ul>
+<li>重复零次或更多次</li>
+<li><p>重复一次或更多次<br>? 重复零次或一次<br>{n} 重复n次<br>{n,} 重复n次或更多次<br>{n,m} 重复n到m次</p>
+<p>(1)\d* 匹配重复0次或多次数字 例如:可能为空 或 任意数字（2,3,…..）</p>
+<p>(2)\d+ 匹配重复1次或多次数字 例如:可能为1个或多个数字 1,23,234,2345，……..</p>
+<p>(3)\d? 匹配重复次个或者一次数字 例如：可能为空或者任意的一个数字（1,2，…..）</p>
+<p>(4)\d{8}匹配重复8次数字 例如：123456768</p>
+<p>(5)\d{4,}匹配重复至少4次数字 例如：1234,12345,124244,…..</p>
+<p>(6)^\d{8,11}$匹配重复8-11次数字 例如：12345678,123456789,1234567890,12345678901</p>
+<p>在实际的开发中，可能会遇到要比配元字符的情况，这个时候就需要进行字符转义，如元字符 . \ 需要转换为. \ \</p>
+<p>例如： 需要匹配qq邮箱 \d{8,}+qq+.+com 在这里的. 就需要加斜杠</p>
+<p>字符分枝多用于满足不同情况的选择，用“|”将不同的条件分割开来，比如有些固定电话区号有三位，有些有四位，这个时候可以采用字符分枝</p>
+<p>例如：\d{3}-\d{8}|\d{4}-\d{8} 可以匹配两种不同长度区号的固定电话</p>
+<p>字符分组多用于将多个字符重复，主要通过使用小括号()来进行分组</p>
+<p>形如：（\d\w){3} 重复匹配3次（\d\w)</p>
+<p>常用于表示IP地址 形如： ((25[0-5]|2[0-4][0-9]|[0-1]\d\d).){3}(25[0-5]|2[0-4][0-9]|[0-1]\d\d)</p>
+<p>解析：先把IP地址分为两部分一部分是123.123.123. 另一部分是123，又因Ip最大值为255，所以先使用分组，然后在组里边再进行选择，组里也有三部分，0-199,200-249,250-255，分别和上述的表达是对应，最后还要注意分组之后还要加上一个.，因为是元字符所以要转义故加上. 然后再把这部分整体看做是一个组，重复三次，再加上仅有数字的一组也就是不带.的那一组即可完成IP地址的校验</p>
+</li>
+<li><p>捕获</p>
+<ul>
+<li>(exp) 匹配exp,并捕获文本到自动命名的组里</li>
+<li>(?exp) 匹配exp,并捕获文本到名称为name的组里，也可以写成(?’name’exp)</li>
+<li>(?:exp) 匹配exp,不捕获匹配的文本，也不给此分组分配组号</li>
+</ul>
+</li>
+<li>零宽断言<ul>
+<li>(?=exp) 匹配exp前面的位置<ul>
+<li>(?&lt;=exp) 匹配exp后面的位置</li>
+</ul>
+</li>
+<li>(?!exp) 匹配后面跟的不是exp的位置<ul>
+<li>(?&lt;!exp) 匹配前面不是exp的位置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>(?#comment) 这种类型的分组不对正则表达式的处理产生任何影响，用于提供注释让人阅读</li>
+</ul>
+</li>
+</ul>
+<p>   贪婪匹配：正则表达式中包含重复的限定符时，通常的行为是匹配尽可能多的字符。<br>   懒惰匹配，有时候需要匹配尽可能少的字符。</p>
+<p>   例如：</p>
+<ul>
+<li><p>a.*b，它将会匹配最长的以a开始，以b结束的字符串。如果用它来搜索aabab的话，它会匹配整个字符串aabab。</p>
+</li>
+<li><p>但是我们此时可能需要匹配的是ab这样的话就需要用到懒惰匹配了。懒惰匹配会匹配尽可能少的字符  </p>
+<p>常用的懒惰匹配限定符如下:</p>
+<ul>
+<li>*? 重复任意次，但尽可能少重复</li>
+<li>+? 重复1次或更多次，但尽可能少重复</li>
+<li>?? 重复0次或1次，但尽可能少重复</li>
+<li>{n,m}? 重复n到m次，但尽可能少重复</li>
+<li>{n,}? 重复n次以上，但尽可能少重复</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>只能输入数字：”^[0-9]*$”。</p>
+</li>
+<li><p>只能输入n位的数字：”^”d{n}$”。</p>
+</li>
+<li><p>只能输入至少n位的数字：”^”d{n,}$”。</p>
+</li>
+<li><p>只能输入m~n位的数字：。”^”d{m,n}$”</p>
+</li>
+<li><p>只能输入零和非零开头的数字：”^(0|[1-9][0-9]*)$”。</p>
+</li>
+<li><p>只能输入有两位小数的正实数：”^[0-9]+(.[0-9]{2})?$”。</p>
+</li>
+<li><p>只能输入有1~3位小数的正实数：”^[0-9]+(.[0-9]{1,3})?$”。</p>
+</li>
+<li><p>只能输入非零的正整数：”^”+?[1-9][0-9]*$”。</p>
+</li>
+<li><p>只能输入非零的负整数：”^”-[1-9][]0-9”*$。</p>
+</li>
+<li><p>只能输入长度为3的字符：”^.{3}$”。</p>
+</li>
+<li><p>只能输入由26个英文字母组成的字符串：”^[A-Za-z]+$”。</p>
+</li>
+<li><p>只能输入由26个大写英文字母组成的字符串：”^[A-Z]+$”。</p>
+</li>
+<li><p>只能输入由26个小写英文字母组成的字符串：”^[a-z]+$”。</p>
+</li>
+<li><p>只能输入由数字和26个英文字母组成的字符串：”^[A-Za-z0-9]+$”。</p>
+</li>
+<li><p>只能输入由数字、26个英文字母或者下划线组成的字符串：”^”w+$”。</p>
+</li>
+<li><p>验证用户密码：”^[a-zA-Z]”w{5,17}$”正确格式为：以字母开头，长度在6~18之间，只能包含字符、数字和下划线。</p>
+</li>
+<li><p>验证是否含有^%&amp;’,;=?$””等字符：”[^%&amp;’,;=?$”x22]+”。</p>
+</li>
+<li><p>只能输入汉字：”^[“u4e00-“u9fa5]{0,}$”</p>
+</li>
+<li><p>验证Email地址：”^”w+([-+.]”w+)@”w+([-.]”w+)“.”w+([-.]”w+)*$”。</p>
+</li>
+<li><p>验证URL：”^<a href="http://([&quot;w-]+&quot;.)+[&quot;w-]+(/[&quot;w-./?%&amp;=]*)?$&quot;。" target="_blank" rel="noopener">http://([&quot;w-]+&quot;.)+[&quot;w-]+(/[&quot;w-./?%&amp;=]*)?$&quot;。</a></p>
+</li>
+<li><p>验证电话号码：”^(“(“d{3,4}-)|”d{3.4}-)?”d{7,8}$”正确格式为：”XXX-XXXXXXX”、”XXXX- XXXXXXXX”、”XXX-XXXXXXX”、”XXX-XXXXXXXX”、”XXXXXXX”和”XXXXXXXX”。</p>
+</li>
+<li><p>验证身份证号(15位或18位数字)：”^”d{15}|”d{18}$”。</p>
+</li>
+<li><p>验证一年的12个月：”^(0?[1-9]|1[0-2])$”正确格式为：”01”～”09”和”1”～”12”。</p>
+</li>
+<li><p>验证一个月的31天：”^((0?[1-9])|((1|2)[0-9])|30|31)$”正确格式为;”01”～”09”和”1”～”31”。</p>
+</li>
+</ul>
+<hr>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/正则/" rel="tag">#正则</a>
+          
+            <a href="/tags/正则用例/" rel="tag">#正则用例</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/11/23/safari文本不能换行的小bug/" rel="prev">safari文本不能换行的小bug</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/08/移动端web开发的一些小碎片技巧/" rel="next">移动端web开发的一些小碎片技巧</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/11/17/正则详解及js中常见正则用例/" data-title="正则详解及js中常见正则用例" data-url="http://dongweb.me/2014/11/17/正则详解及js中常见正则用例/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xkwi7.com1.z0.glb.clouddn.com/C40F6FE2-A608-42A2-BA77-EF7BBE8ABE1A.png" alt="DD_FREE" itemprop="image">
+          <p class="site-author-name" itemprop="name">DD_FREE</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dongweb" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3211723437" target="_blank">weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/ddlong-30" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DD_FREE</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dongweb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

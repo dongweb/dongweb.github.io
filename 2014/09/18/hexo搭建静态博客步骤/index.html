@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="博客,hexo,">
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="如何用hexo搭建自己的静态博客既然用了hexo搭建了博客，当然得把自己的过程记录一下，无论是对新事物的巩固还是经验的分享都需要如此： 准备: 一：本地环境安装node和git，具体安装方法google或者baidu去吧. 二：githubgithub的注册以及使用我也不再重述，网上很多，我也不想复制别人的东西，完全是多余。你可以查找相关资料。   注册完成后我们要用到的功能就是它的github">
+<meta name="keywords" content="博客,hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建静态博客步骤">
+<meta property="og:url" content="http://dongweb.me/2014/09/18/hexo搭建静态博客步骤/index.html">
+<meta property="og:site_name" content="董久龙的博客">
+<meta property="og:description" content="如何用hexo搭建自己的静态博客既然用了hexo搭建了博客，当然得把自己的过程记录一下，无论是对新事物的巩固还是经验的分享都需要如此： 准备: 一：本地环境安装node和git，具体安装方法google或者baidu去吧. 二：githubgithub的注册以及使用我也不再重述，网上很多，我也不想复制别人的东西，完全是多余。你可以查找相关资料。   注册完成后我们要用到的功能就是它的github">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xkwi7.com1.z0.glb.clouddn.com/AF6C9D7C-497D-4282-A6C4-1DB222BB7364.png">
+<meta property="og:image" content="http://7xkwi7.com1.z0.glb.clouddn.com/76B27FC0-6263-4872-AEA3-FE667E07039F.png">
+<meta property="og:updated_time" content="2015-08-06T07:39:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo搭建静态博客步骤">
+<meta name="twitter:description" content="如何用hexo搭建自己的静态博客既然用了hexo搭建了博客，当然得把自己的过程记录一下，无论是对新事物的巩固还是经验的分享都需要如此： 准备: 一：本地环境安装node和git，具体安装方法google或者baidu去吧. 二：githubgithub的注册以及使用我也不再重述，网上很多，我也不想复制别人的东西，完全是多余。你可以查找相关资料。   注册完成后我们要用到的功能就是它的github">
+<meta name="twitter:image" content="http://7xkwi7.com1.z0.glb.clouddn.com/AF6C9D7C-497D-4282-A6C4-1DB222BB7364.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> hexo搭建静态博客步骤 | 董久龙的博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">董久龙的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Ex6ZCe4NsRHK-NaX5yfU','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              hexo搭建静态博客步骤
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-09-18T10:29:41+08:00" content="2014-09-18">
+            2014-09-18
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/关于博客/" itemprop="url" rel="index">
+                  <span itemprop="name">关于博客</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/09/18/hexo搭建静态博客步骤/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/18/hexo搭建静态博客步骤/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="如何用hexo搭建自己的静态博客">如何用hexo搭建自己的静态博客</h2><p>既然用了hexo搭建了博客，当然得把自己的过程记录一下，无论是对新事物的巩固还是经验的分享都需要如此：</p>
+<p>准备:</p>
+<h3 id="一：本地环境">一：本地环境</h3><p>安装node和git，具体安装方法google或者baidu去吧.</p>
+<h3 id="二：github">二：github</h3><p>github的注册以及使用我也不再重述，网上很多，我也不想复制别人的东西，完全是多余。你可以查找相关资料。  </p>
+<p>注册完成后我们要用到的功能就是它的github pages，也就是个人主页仓库，github每个账户只能有一个仓库用来存放个人主页，仓库的名字必须是username/username.github.io，这是github规定死的就这么写；目的是方便你通过<a href="http://username.github.io这种形式来访问你的个人主页。" target="_blank" rel="noopener">http://username.github.io这种形式来访问你的个人主页。</a></p>
+<p>如果上面的看起来有点困难，好的，那么你只需要做以下几步：  </p>
+<ol>
+<li>打开github首页,点击右下方的那个绿色按钮(+New repository).  </li>
+<li>在新打开的页面Repository name的位置输入你的个人主页仓库名,比如你的github账户名是zhangsan,那么此处就填写zhangsan.github.io,填好后直接点下方的绿色按钮(Creating repository),其他不需要做任何操作。  </li>
+<li>完成第二步github会到一个仓库的简单信息的页面，这个页面的主要是用来告诉你如何通过git来关联远程仓库的，也就是你的zhangsan.github.io这个仓库。完成这步以后我们就该在本地环境下搭建博客了.</li>
+</ol>
+<h3 id="三：Hexo安装">三：Hexo安装</h3><p>在你想安装的目录下通过终端执行如下命令(理解这个操作需要你把文章开头的git弄明白了)：</p>
+<p>我用的mac,如果你是windows系统可能不需要加前面的sudo.<br><code>sudo npm install hexo-cli -g</code>  </p>
+<p>上面的命令执行完以后再依次执行如下命令:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>hexo init <span class="xml"><span class="tag">&lt;<span class="name">filename</span>&gt;</span></span></span><br><span class="line"><span class="bullet">2. </span>cd blog</span><br><span class="line"><span class="bullet">3. </span>npm install</span><br><span class="line"><span class="bullet">4. </span>hexo server</span><br></pre></td></tr></table></figure>
+<p>上述命令依次执行完以后在浏览器输入<a href="http://0.0.0.0:4000/应该能看到hexo的雏形了" target="_blank" rel="noopener">http://0.0.0.0:4000/应该能看到hexo的雏形了</a>.</p>
+<h3 id="四：配置">四：配置</h3><p>在根目录下找到_config.yml这个文件，里面就是配置信息，这步可以网上搜索一下，基本都是一样的。</p>
+<h3 id="五：调试">五：调试</h3><p>首先发表一篇文章试一下。在命令行执行如下命令：</p>
+<p><code>hexo new &#39;A Test Article&#39;</code></p>
+<p>完了以后你会发现在source/_posts这个目录下会有你刚创建的名为“A-Test-Article.md”的文章，你所要写的文章内容就是在这个文件里操作的，可以看下我就是这么编写这篇文章的：</p>
+<p><img src="http://7xkwi7.com1.z0.glb.clouddn.com/AF6C9D7C-497D-4282-A6C4-1DB222BB7364.png" alt=""></p>
+<p>编辑完以后重启本地服务hexo server，会发现新的文章已经有了。</p>
+<h3 id="六：选择博客主题">六：选择博客主题</h3><p>如果你用默认的主题也可以，如果想选择一个其他主题可以google搜索一下”hexo 主题”,当然我使用的主题是某某人自己搞的主题，然后他把主题放到了github上，这样大家都可以使用他的主题了，也算是现代程序员的一种开源精神，github本身就开源。</p>
+<p>我们以pacman这个主题为例子，为什么用他的，因为我也是参考别人文档直接用了他的。哈哈，废话不多说，步骤如下:</p>
+<p>执行命令：</p>
+<p><code>git clone https://github.com/A-limon/pacman.git themes/pacman</code></p>
+<p>完了以后在根目录编辑配置文件_config.yml,找到theme字段,将值改为pacman,注意值的前面是有个空格的，hexo配置文件里的值都是如此。重启服务，刷新本地页面，会发现主题已经变为pacman了。</p>
+<h3 id="七：部署到github">七：部署到github</h3><p>在部署之前我们要配置一下_config.yml。在配置之前首先执行一下这个命令：</p>
+<p><code>npm install hexo-deployer-git --save</code></p>
+<p>然后把_config.yml里的deploy里的type改为git,repository改为你的github远程仓库地址,也就是第二步第三小步里的东东.看一下我的吧。你可以参考：</p>
+<p><img src="http://7xkwi7.com1.z0.glb.clouddn.com/76B27FC0-6263-4872-AEA3-FE667E07039F.png" alt=""></p>
+<p>OK,到这里我们可以部署了，执行如下命令:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo <span class="keyword">generate</span> <span class="comment">//这步是生成静态文件，都存放在public目录下的,你真正部署到github上的也就是这个目录下的文件</span></span><br><span class="line">hexo deploy <span class="comment">//这个命令是部署到github仓库</span></span><br></pre></td></tr></table></figure>
+<p>现在刷新你的github仓库，会发现里面存的就是你本地public目录下的文件。</p>
+<p>执行完上述以后，在浏览器输入<a href="http://username.github.io（username换成你的github账户名），会发现和你本地显示的是一样的。如果当时没出现，请过几分钟再试，如果还是不行就要重头查找原因了。" target="_blank" rel="noopener">http://username.github.io（username换成你的github账户名），会发现和你本地显示的是一样的。如果当时没出现，请过几分钟再试，如果还是不行就要重头查找原因了。</a></p>
+<h3 id="八：线上测试">八：线上测试</h3><p>再发表一篇文章到线上，执行hexo new ‘Article name’,生成一篇新文章，然后编辑文章。最后依次执行第七步的那几个命令：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo <span class="keyword">generate</span> </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>上述命令也可以简化成: hexo d -g.</p>
+<p>再刷新线上页面，如果文章添加成功，那么我们已经顺利的用hexo搭建了一个静态博客了。</p>
+<h3 id="九：补充">九：补充</h3><p>到现在我们已经用hexo顺利的部署了一个静态博客了，当然虽说静态，但也算是一高逼格的东西。剩下的是对上述的一个补充。</p>
+<p>你可能需要一些比如：绑定独立域名、搜索、标签页、分类页、404页面、第三方插件的功能，这些东西完全可以自己查找修改，只要你完成了前八步，并且顺利运行，剩下的都是可劲儿折腾就行了。</p>
+<p>这里附上一些相关资料，以供查阅：</p>
+<ol>
+<li>hexo博客的优化技巧：<a href="http://zipperary.com/2013/06/02/hexo-guide-5/" target="_blank" rel="noopener">http://zipperary.com/2013/06/02/hexo-guide-5/</a></li>
+<li>第三方插件：<a href="http://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/third-party-services.html</a></li>
+</ol>
+<p>发表文章时要用到markdown语法，可以参考：</p>
+<p><a href="http://www.jianshu.com/p/q81RER" target="_blank" rel="noopener">http://www.jianshu.com/p/q81RER</a></p>
+<h4 id="以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。">以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。</h4></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/博客/" rel="tag">#博客</a>
+          
+            <a href="/tags/hexo/" rel="tag">#hexo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/09/26/HTTP头信息详解/" rel="prev">HTTP头信息详解</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/05/用hexo新搞了一个个人博客/" rel="next">用hexo新搞了一个个人博客</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/09/18/hexo搭建静态博客步骤/" data-title="hexo搭建静态博客步骤" data-url="http://dongweb.me/2014/09/18/hexo搭建静态博客步骤/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xkwi7.com1.z0.glb.clouddn.com/C40F6FE2-A608-42A2-BA77-EF7BBE8ABE1A.png" alt="DD_FREE" itemprop="image">
+          <p class="site-author-name" itemprop="name">DD_FREE</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dongweb" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3211723437" target="_blank">weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/ddlong-30" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用hexo搭建自己的静态博客"><span class="nav-number">1.</span> <span class="nav-text">如何用hexo搭建自己的静态博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一：本地环境"><span class="nav-number">1.1.</span> <span class="nav-text">一：本地环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二：github"><span class="nav-number">1.2.</span> <span class="nav-text">二：github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三：Hexo安装"><span class="nav-number">1.3.</span> <span class="nav-text">三：Hexo安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四：配置"><span class="nav-number">1.4.</span> <span class="nav-text">四：配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五：调试"><span class="nav-number">1.5.</span> <span class="nav-text">五：调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六：选择博客主题"><span class="nav-number">1.6.</span> <span class="nav-text">六：选择博客主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七：部署到github"><span class="nav-number">1.7.</span> <span class="nav-text">七：部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八：线上测试"><span class="nav-number">1.8.</span> <span class="nav-text">八：线上测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九：补充"><span class="nav-number">1.9.</span> <span class="nav-text">九：补充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。"><span class="nav-number">1.9.1.</span> <span class="nav-text">以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DD_FREE</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dongweb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="斐波那契数列 算法 兔子数列,">
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="意大利的数学家列昂那多·斐波那契在1202年研究兔子产崽问题时发现了此数列．设一对大兔子每月生一对小兔子，每对新生兔在出生一个月后又下崽，假若兔子都不死亡． 问：一对兔子，一年能繁殖成多少对兔子？ 题中本质上有两类兔子：一类是能生殖的兔子，简称为大兔子；新生的兔子不能生殖，简称为小兔子；小兔子一个月就长成大兔子．求的是大兔子与小兔子的总和．  12345月   份:  Ⅰ   Ⅱ   Ⅲ   Ⅳ">
+<meta name="keywords" content="斐波那契数列 算法 兔子数列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解斐波那契数列的原理">
+<meta property="og:url" content="http://dongweb.me/2014/11/29/理解斐波那契数列的原理/index.html">
+<meta property="og:site_name" content="董久龙的博客">
+<meta property="og:description" content="意大利的数学家列昂那多·斐波那契在1202年研究兔子产崽问题时发现了此数列．设一对大兔子每月生一对小兔子，每对新生兔在出生一个月后又下崽，假若兔子都不死亡． 问：一对兔子，一年能繁殖成多少对兔子？ 题中本质上有两类兔子：一类是能生殖的兔子，简称为大兔子；新生的兔子不能生殖，简称为小兔子；小兔子一个月就长成大兔子．求的是大兔子与小兔子的总和．  12345月   份:  Ⅰ   Ⅱ   Ⅲ   Ⅳ">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xkwi7.com1.z0.glb.clouddn.com/E5IN9LMTB3Z.jpg">
+<meta property="og:updated_time" content="2015-08-13T14:31:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解斐波那契数列的原理">
+<meta name="twitter:description" content="意大利的数学家列昂那多·斐波那契在1202年研究兔子产崽问题时发现了此数列．设一对大兔子每月生一对小兔子，每对新生兔在出生一个月后又下崽，假若兔子都不死亡． 问：一对兔子，一年能繁殖成多少对兔子？ 题中本质上有两类兔子：一类是能生殖的兔子，简称为大兔子；新生的兔子不能生殖，简称为小兔子；小兔子一个月就长成大兔子．求的是大兔子与小兔子的总和．  12345月   份:  Ⅰ   Ⅱ   Ⅲ   Ⅳ">
+<meta name="twitter:image" content="http://7xkwi7.com1.z0.glb.clouddn.com/E5IN9LMTB3Z.jpg">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 理解斐波那契数列的原理 | 董久龙的博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">董久龙的博客</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Ex6ZCe4NsRHK-NaX5yfU','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              理解斐波那契数列的原理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-29T21:36:12+08:00" content="2014-11-29">
+            2014-11-29
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/算法/" itemprop="url" rel="index">
+                  <span itemprop="name">算法</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/29/理解斐波那契数列的原理/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/29/理解斐波那契数列的原理/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>意大利的数学家列昂那多·斐波那契在1202年研究兔子产崽问题时发现了此数列．设一对大兔子每月生一对小兔子，每对新生兔在出生一个月后又下崽，假若兔子都不死亡．</p>
+<p>问：一对兔子，一年能繁殖成多少对兔子？</p>
+<p>题中本质上有两类兔子：一类是能生殖的兔子，简称为大兔子；新生的兔子不能生殖，简称为小兔子；小兔子一个月就长成大兔子．求的是大兔子与小兔子的总和．</p>
+ <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">月   份:  Ⅰ   Ⅱ   Ⅲ   Ⅳ   Ⅴ   Ⅵ   Ⅶ   Ⅷ   Ⅸ   Ⅹ   Ⅺ   Ⅻ</span><br><span class="line"></span><br><span class="line">大兔对数: <span class="number"> 1 </span> <span class="number"> 1 </span> <span class="number"> 2 </span> <span class="number"> 3 </span> <span class="number"> 5 </span> <span class="number"> 8 </span> <span class="number"> 13 </span>  <span class="number"> 21 </span> <span class="number"> 34 </span><span class="number"> 55 </span><span class="number"> 89 </span> 144</span><br><span class="line"></span><br><span class="line">小兔对数: <span class="number"> 0 </span> <span class="number"> 1 </span> <span class="number"> 1 </span> <span class="number"> 2 </span> <span class="number"> 3 </span> <span class="number"> 5 </span>  <span class="number"> 8 </span>  <span class="number"> 13 </span> <span class="number"> 21 </span><span class="number"> 34 </span><span class="number"> 55 </span>  89</span><br></pre></td></tr></table></figure>
+<p> 到十二月时有大兔子144对，小兔子89对，共有兔子 144+89=233对;</p>
+<p> 从上表看出：</p>
+<p> ① 每月小兔对数=上月大兔对数。</p>
+<p> ② 每月大兔对数等于上个月大兔对数与小兔对数之和．</p>
+<p> 来看一张图：(图一)<br><img src="http://7xkwi7.com1.z0.glb.clouddn.com/E5IN9LMTB3Z.jpg" alt=""></p>
+<p> 综合①②两点以及图一，我们就有：每月大兔对数等于前两个月大兔对数之和．<br>如果用 un 表示第 n 月的大兔对数，则有:</p>
+<p><code>un = un-1 +  un-2 ,   n &gt; 2</code></p>
+<p>每月大兔对数 un 排成数列为：1，1，2，3，5，8，13，21，34，55，89，144，• • •</p>
+<p>代码就是：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr=[];</span><br><span class="line">function <span class="built_in">f</span>(<span class="keyword">n</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">n</span>===1) &#123;</span><br><span class="line">		<span class="keyword">return</span> 1;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">n</span>===2)&#123;</span><br><span class="line">		<span class="keyword">return</span> 1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (arr[<span class="keyword">n</span>]) &#123;</span><br><span class="line">		<span class="keyword">return</span> arr[<span class="keyword">n</span>];</span><br><span class="line">	&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> arr[<span class="keyword">n</span>]=<span class="built_in">f</span>(<span class="keyword">n</span>-1)+<span class="built_in">f</span>(<span class="keyword">n</span>-2);</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">&#125;</span><br><span class="line">alert(<span class="built_in">f</span>(12));<span class="comment">//144</span></span><br><span class="line">console.<span class="built_in">log</span>(arr)</span><br></pre></td></tr></table></figure>
+<p>此数列便称为斐波那契数列．</p>
+<p>斐波那契数列：</p>
+<p>1，1，2，3，5，8，13，21，34，55，89，144，• • •</p>
+<p>上述数列中的每一个数称为斐波那契数．此数列有下述递推公式： </p>
+<p><code>u1 = 1， u2 = 1，un = un-1 +  un-2 ，n &gt; 2 ．</code></p>
+<p>数学的各个领域常常奇妙而出乎意料地联系在一起: 斐波那契数列是从兔子问题中抽象出来的，如果它在其它方面没有应用，它就不会有强大的生命．发人深省的是，斐波那契数列确实在许多问题中出现．</p>
+<p>自然界中的斐波那契数:花瓣数中的斐波那契数大多数植物的花，其花瓣数都恰是斐波那契数．例如，兰花、茉利花、百合花有3个花瓣，毛茛属的植物有5个花瓣，翠雀属植物有8个花瓣，万寿菊属植物有13个花瓣，紫菀属植物有21个花瓣,雏菊属植物有34、55或89个花瓣．</p>
+<p>向日葵花盘内，种子是按对数螺线排列的，有顺时针转和逆时针转的两组对数螺线。两组螺线的条数往往成相继的两个斐波那契数，一般是34和55，大向日葵是89和144，还曾发现过一个更大的向日葵有144和233条螺线，它们都是相继的两个斐波那契数．</p>
+<p>斐波那契数列在现实应用中也非常重要，如股市变盘点、二十四变盘点，这里不再详述，有兴趣可以查阅相关资料。</p>
+<hr>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/斐波那契数列-算法-兔子数列/" rel="tag">#斐波那契数列 算法 兔子数列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/12/02/js中什么是词法作用域/" rel="prev">js中什么是词法作用域</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/23/safari文本不能换行的小bug/" rel="next">safari文本不能换行的小bug</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/11/29/理解斐波那契数列的原理/" data-title="理解斐波那契数列的原理" data-url="http://dongweb.me/2014/11/29/理解斐波那契数列的原理/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xkwi7.com1.z0.glb.clouddn.com/C40F6FE2-A608-42A2-BA77-EF7BBE8ABE1A.png" alt="DD_FREE" itemprop="image">
+          <p class="site-author-name" itemprop="name">DD_FREE</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dongweb" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3211723437" target="_blank">weibo</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/ddlong-30" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DD_FREE</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dongweb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
