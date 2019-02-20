@@ -173,6 +173,377 @@
           
           
             
+              <a class="post-title-link" href="/2014/09/26/HTTP头信息详解/" itemprop="url">
+                HTTP头信息详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-09-26T22:44:25+08:00" content="2014-09-26">
+            2014-09-26
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/http头信息/" itemprop="url" rel="index">
+                  <span itemprop="name">http头信息</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/09/26/HTTP头信息详解/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/26/HTTP头信息详解/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>HTTP客户程序（例如浏览器），向服务器发送请求的时候必须指明请求类型（一般是GET或者POST）。如有必要，客户程序还可以选择发送其他的请求头。大多数请求头并不是必需的，但Content-Length除外。对于POST请求来说Content-Length必须出现。</p>
+<p>HTTP的头域包括通用头、请求头、响应头和实体头四个部分。每个头域由一个域名，冒号（:）和域值三部分组成。</p>
+<ul>
+<li><p>通用头部是客户端和服务器都可以使用的头部，可以在客户端、服务器和其他应用程序之间提供一些非常有用的通用功能，如Date头部。</p>
+</li>
+<li><p>请求头部是请求报文特有的，它们为服务器提供了一些额外信息，比如客户端希望接收什么类型的数据，如Accept头部。</p>
+</li>
+<li><p>响应头部便于客户端提供信息，比如，客服端在与哪种类型的服务器进行交互，如Server头部。</p>
+</li>
+<li><p>实体头部指的是用于应对实体主体部分的头部，比如，可以用实体头部来说明实体主体部分的数据类型，如Content-Type头部。</p>
+</li>
+</ul>
+<p>通用头域包含请求和响应消息都支持的头域，通用头域包含缓存头部Cache-Control、Pragma及信息性头部Connection、Date、Transfer-Encoding、Update、Via。</p>
+<p>–</p>
+<h4 id="1、Cache-Control[缓存相关]">1、Cache-Control[缓存相关]</h4><p>Cache-Control指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置 Cache-Control并不会修改另一个消息处理过程中的缓存处理过程。请求时的缓存指令包括no-cache、no-store、max-age、 max-stale、min-fresh、only-if-cached，响应消息中的指令包括public、private、no-cache、no- store、no-transform、must-revalidate、proxy-revalidate、max-age。各个消息中的指令含义如下：</p>
+<p>　　no-cache：指示请求或响应消息不能缓存，实际上是可以存储在本地缓存区中的，只是在与原始服务器进行新鲜度验证之前，缓存不能将其提供给客户端使用。　</p>
+<p>　　no-store：缓存应该尽快从存储器中删除文档的所有痕迹，因为其中可能会包含敏感信息。</p>
+<p>　　max-age：缓存无法返回缓存时间长于max-age规定秒的文档，若不超规定秒浏览器将不会发送对应的请求到服务器，数据由缓存直接返回；超过这一时间段才进一步由服务器决定是返回新数据还是仍由缓存提供。若同时还发送了max-stale指令，则使用期可能会超过其过期时间。</p>
+<p>　　min-fresh：至少在未来规定秒内文档要保持新鲜，接受其新鲜生命期大于其当前 Age 跟 min-fresh 值之和的缓存对象。</p>
+<p>　　max-stale：指示客户端可以接收过期响应消息，如果指定max-stale消息的值，那么客户端可以接收过期但在指定值之内的响应消息。</p>
+<p>　　only-if-cached：只有当缓存中有副本存在时，客户端才会获得一份副本。</p>
+<p>　　Public：指示响应可被任何缓存区缓存，可以用缓存内容回应任何用户。</p>
+<p>　　Private：指示对于单个用户的整个或部分响应消息，不能被共享缓存处理，只能用缓存内容回应先前请求该内容的那个用户。
+　　</p>
+<h4 id="2、Pragma[缓存相关]">2、Pragma[缓存相关]</h4><p>　　Pragma头域用来包含实现特定的指令，最常用的是Pragma:no-cache。在HTTP/1.1协议中，它的含义和Cache- Control:no-cache相同。</p>
+<h4 id="3、Connection">3、Connection</h4><p>　　Connection表示是否需要持久连接。如果Servlet看到这里的值为“Keep-Alive”，或者看到请求使用的是HTTP 1.1（HTTP 1.1默认进行持久连接），它就可以利用持久连接的优点，当页面包含多个元素时（例如Applet，图片），显著地减少下载所需要的时间。要实现这一点，Servlet需要在应答中发送一个Content-Length头，最简单的实现方法是：先把内容写入ByteArrayOutputStream，然后在正式写出内容之前计算它的大小。</p>
+<p>　　Close：告诉WEB服务器或者代理服务器，在完成本次请求的响应后，断开连接，不要等待本次连接的后续请求了。</p>
+<p>　　Keepalive：告诉WEB服务器或者代理服务器，在完成本次请求的响应后，保持连接，等待本次连接的后续请求。</p>
+<p>　　Keep-Alive：如果浏览器请求保持连接，则该头部表明希望 WEB 服务器保持连接多长时间（秒），如Keep-Alive：300。</p>
+<h4 id="4、Date">4、Date</h4><p>　　Date头域表示消息发送的时间，服务器响应中要包含这个头部，因为缓存在评估响应的新鲜度时要用到，其时间的描述格式由RFC822定义。例如，Date:Mon, 31 Dec 2001 04:25:57 GMT。Date描述的时间表示世界标准时，换算成本地时间，需要知道用户所在的时区。</p>
+<h4 id="5、Transfer-Encoding">5、Transfer-Encoding</h4><p>　　WEB 服务器表明自己对本响应消息体（不是消息体里面的对象）作了怎样的编码，比如是否分块（chunked），例如：Transfer-Encoding: chunked</p>
+<h4 id="6、Upgrade">6、Upgrade</h4><p>　　它可以指定另一种可能完全不同的协议，如HTTP/1.1客户端可以向服务器发送一条HTTP/1.0请求，其中包含值为“HTTP/1.1”的Update头部，这样客户端就可以测试一下服务器是否也使用HTTP/1.1了。</p>
+<h4 id="7、Via">7、Via</h4><p>　　列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。</p>
+<p>　　当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via头部，并把自己的相关信息加到后面，以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。例如：Via：1.0 236-81.D07071953.sina.com.cn:80 (squid/2.6.STABLE13)</p>
+<p>　　请求头用于说明是谁或什么在发送请求、请求源于何处，或者客户端的喜好及能力。服务器可以根据请求头部给出的客户端信息，试着为客户端提供更好的响应。请求头域可能包含下列字段Accept、Accept-Charset、Accept- Encoding、Accept-Language、Authorization、From、Host、If-Modified-Since、If-Match、If-None-Match、If-Range、If-Range、If-Unmodified-Since、Max-Forwards、Proxy-Authorization、Range、Referer、User-Agent。对请求头域的扩展要求通讯双方都支持，如果存在不支持的请求头域，一般将会作为实体头域处理。</p>
+<h4 id="8、Accept">8、Accept</h4><p>　　告诉WEB服务器自己接受什么介质类型，/ 表示任何类型，type/* 表示该类型下的所有子类型，type/sub-type。</p>
+<h4 id="9、Accept-Charset">9、Accept-Charset</h4><p>　　浏览器告诉服务器自己能接收的字符集。</p>
+<h4 id="10、Accept-Encoding">10、Accept-Encoding</h4><p>　　浏览器申明自己接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法（gzip，deflate）。</p>
+<h4 id="11、Accept-Language">11、Accept-Language</h4><p>　　浏览器申明自己接收的语言。语言跟字符集的区别：中文是语言，中文有多种字符集，比如big5，gb2312，gbk等等。</p>
+<h4 id="12、Authorization">12、Authorization</h4><p>　　当客户端接收到来自WEB服务器的 WWW-Authenticate 响应时，用该头部来回应自己的身份验证信息给WEB服务器。</p>
+<h4 id="13、If-Match">13、If-Match</h4><p>　　如果对象的 ETag 没有改变，其实也就意味著对象没有改变，才执行请求的动作，获取文档。</p>
+<h4 id="14、If-None-Match">14、If-None-Match</h4><p>　　如果对象的 ETag 改变了，其实也就意味著对象也改变了，才执行请求的动作，获取文档。</p>
+<h4 id="15、If-Modified-Since">15、If-Modified-Since</h4><p>　　如果请求的对象在该头部指定的时间之后修改了，才执行请求的动作（比如返回对象），否则返回代码304，告诉浏览器该对象没有修改。例如：If-Modified-Since：Thu, 10 Apr 2008 09:14:42 GMT</p>
+<h4 id="16、If-Unmodified-Since">16、If-Unmodified-Since</h4><p>　　如果请求的对象在该头部指定的时间之后没修改过，才执行请求的动作（比如返回对象）。</p>
+<h4 id="17、If-Range">17、If-Range</h4><p>　　浏览器告诉 WEB 服务器，如果我请求的对象没有改变，就把我缺少的部分给我，如果对象改变了，就把整个对象给我。浏览器通过发送请求对象的ETag 或者自己所知道的最后修改时间给 WEB 服务器，让其判断对象是否改变了。总是跟 Range 头部一起使用。</p>
+<h4 id="18、Range">18、Range</h4><p>　　浏览器（比如 Flashget 多线程下载时）告诉 WEB 服务器自己想取对象的哪部分。例如：Range: bytes=1173546</p>
+<h4 id="19、Proxy-Authenticate">19、Proxy-Authenticate</h4><p>　　代理服务器响应浏览器，要求其提供代理身份验证信息。</p>
+<h4 id="20、Proxy-Authorization">20、Proxy-Authorization</h4><p>　　浏览器响应代理服务器的身份验证请求，提供自己的身份信息。</p>
+<h4 id="21、Host">21、Host</h4><p>　　客户端指定自己想访问的WEB服务器的域名/IP 地址和端口号。如Host：rss.sina.com.cn</p>
+<h4 id="22、Referer">22、Referer</h4><p>　　浏览器向WEB 服务器表明自己是从哪个网页URL获得点击当前请求中的网址/URL，例如：Referer：<a href="http://www.ecdoer.com/" target="_blank" rel="noopener">http://www.ecdoer.com/</a></p>
+<h4 id="23、User-Agent">23、User-Agent</h4><p>　　浏览器表明自己的身份（是哪种浏览器）。例如：User-Agent：Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN;rv:1.8.1.14) Gecko/20080404 Firefox/2.0.0.14</p>
+<p>　　响应头向客户端提供一些额外信息，比如谁在发送响应、响应者的功能，甚至与响应相关的一些特殊指令。这些头部有助于客户端处理响应，并在将来发起更好的请求。响应头域包含Age、Location、Proxy-Authenticate、Public、Retry- After、Server、Vary、Warning、WWW-Authenticate。对响应头域的扩展要求通讯双方都支持，如果存在不支持的响应头域，一般将会作为实体头域处理。</p>
+<h4 id="24、Age[缓存相关]">24、Age[缓存相关]</h4><p>　　当代理服务器用自己缓存的实体去响应请求时，用该头部表明该实体从产生到现在经过多长时间了。</p>
+<h4 id="25、Server">25、Server</h4><p>　　WEB 服务器表明自己是什么软件及版本等信息。例如：Server：Apache/2.0.61 (Unix)</p>
+<h4 id="26、Accept-Ranges">26、Accept-Ranges</h4><p>　　WEB服务器表明自己是否接受获取其某个实体的一部分（比如文件的一部分）的请求。bytes：表示接受，none：表示不接受。</p>
+<h4 id="27、Vary">27、Vary</h4><p>　　WEB服务器用该头部的内容告诉 Cache 服务器，在什么条件下才能用本响应所返回的对象响应后续的请求。假如源WEB服务器在接到第一个请求消息时，其响应消息的头部为：Content-Encoding: gzip; Vary: Content-Encoding，那么Cache服务器会分析后续请求消息的头部，检查其Accept-Encoding，是否跟先前响应的Vary头部值一致，即是否使用相同的内容编码方法，这样就可以防止Cache服务器用自己Cache 里面压缩后的实体响应给不具备解压能力的浏览器。例如：Vary：Accept-Encoding。</p>
+<p>　　实体头部提供了有关实体及其内容的大量信息，从有关对象类型的信息，到能够对资源使用的各种有效的请求方法。总之，实体头部可以告知接收者它在对什么进行处理。请求消息和响应消息都可以包含实体信息，实体信息一般由实体头域和实体组成。实体头域包含关于实体的原信息，实体头包括信息性头部Allow、Location，内容头部Content-Base、Content-Encoding、Content-Language、Content-Length、Content-Location、Content-MD5、Content-Range、Content-Type，缓存头部Etag、Expires、Last-Modified、extension-header。</p>
+<h4 id="28、Allow">28、Allow</h4><p>　　服务器支持哪些请求方法（如GET、POST等）。</p>
+<h4 id="29、Location">29、Location</h4><p>　　表示客户应当到哪里去提取文档，用于将接收端定位到资源的位置（URL）上。Location通常不是直接设置的，而是通过HttpServletResponse的sendRedirect方法，该方法同时设置状态代码为302。</p>
+<h4 id="30、Content-Base">30、Content-Base</h4><p>　　解析主体中的相对URL时使用的基础URL。</p>
+<h4 id="31、Content-Encoding">31、Content-Encoding</h4><p>　　WEB服务器表明自己使用了什么压缩方法（gzip，deflate）压缩响应中的对象。例如：Content-Encoding：gzip</p>
+<h4 id="32、Content-Language">32、Content-Language</h4><p>　　WEB 服务器告诉浏览器理解主体时最适宜使用的自然语言。</p>
+<h4 id="33、Content-Length">33、Content-Length</h4><p>　　WEB服务器告诉浏览器自己响应的对象的长度或尺寸，例如：Content-Length: 26012</p>
+<h4 id="34、Content-Location">34、Content-Location</h4><p>　　资源实际所处的位置。</p>
+<h4 id="35、Content-MD5">35、Content-MD5</h4><p>　　主体的MD5校验和。</p>
+<h4 id="36、Content-Range">36、Content-Range</h4><p>　　实体头用于指定整个实体中的一部分的插入位置，他也指示了整个实体的长度。在服务器向客户返回一个部分响应，它必须描述响应覆盖的范围和整个实体长度。一般格式： Content-Range:bytes-unitSPfirst-byte-pos-last-byte-pos/entity-legth。例如，传送头500个字节次字段的形式：Content-Range:bytes0- 499/1234如果一个http消息包含此节（例如，对范围请求的响应或对一系列范围的重叠请求），Content-Range表示传送的范围，Content-Length表示实际传送的字节数。</p>
+<h4 id="37、Content-Type">37、Content-Type</h4><p>　　WEB 服务器告诉浏览器自己响应的对象的类型。例如：Content-Type：application/xml</p>
+<h4 id="38、Etag[缓存相关]">38、Etag[缓存相关]</h4><p>　　就是一个对象（比如URL）的标志值，就一个对象而言，比如一个html文件，如果被修改了，其Etag也会别修改，所以，ETag的作用跟Last-Modified的作用差不多，主要供WEB服务器判断一个对象是否改变了。比如前一次请求某个html文件时，获得了其 ETag，当这次又请求这个文件时，浏览器就会把先前获得ETag值发送给WEB服务器，然后WEB服务器会把这个ETag跟该文件的当前ETag进行对比，然后就知道这个文件有没有改变了。</p>
+<h4 id="39、Expires[缓存相关]">39、Expires[缓存相关]</h4><p>　　WEB服务器表明该实体将在什么时候过期，对于过期了的对象，只有在跟WEB服务器验证了其有效性后，才能用来响应客户请求。是 HTTP/1.0 的头部。例如：Expires：Sat, 23 May 2009 10:02:12 GMT</p>
+<h4 id="40、Last-Modified[缓存相关]">40、Last-Modified[缓存相关]</h4><p>　　WEB服务器认为对象的最后修改时间，比如文件的最后修改时间，动态页面的最后产生时间等等。例如：Last-Modified：Tue, 06 May 2008 02:42:43 GMT</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/18/hexo搭建静态博客步骤/" itemprop="url">
+                hexo搭建静态博客步骤
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-09-18T10:29:41+08:00" content="2014-09-18">
+            2014-09-18
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/关于博客/" itemprop="url" rel="index">
+                  <span itemprop="name">关于博客</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/09/18/hexo搭建静态博客步骤/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/18/hexo搭建静态博客步骤/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="如何用hexo搭建自己的静态博客">如何用hexo搭建自己的静态博客</h2><p>既然用了hexo搭建了博客，当然得把自己的过程记录一下，无论是对新事物的巩固还是经验的分享都需要如此：</p>
+<p>准备:</p>
+<h3 id="一：本地环境">一：本地环境</h3><p>安装node和git，具体安装方法google或者baidu去吧.</p>
+<h3 id="二：github">二：github</h3><p>github的注册以及使用我也不再重述，网上很多，我也不想复制别人的东西，完全是多余。你可以查找相关资料。  </p>
+<p>注册完成后我们要用到的功能就是它的github pages，也就是个人主页仓库，github每个账户只能有一个仓库用来存放个人主页，仓库的名字必须是username/username.github.io，这是github规定死的就这么写；目的是方便你通过<a href="http://username.github.io这种形式来访问你的个人主页。" target="_blank" rel="noopener">http://username.github.io这种形式来访问你的个人主页。</a></p>
+<p>如果上面的看起来有点困难，好的，那么你只需要做以下几步：  </p>
+<ol>
+<li>打开github首页,点击右下方的那个绿色按钮(+New repository).  </li>
+<li>在新打开的页面Repository name的位置输入你的个人主页仓库名,比如你的github账户名是zhangsan,那么此处就填写zhangsan.github.io,填好后直接点下方的绿色按钮(Creating repository),其他不需要做任何操作。  </li>
+<li>完成第二步github会到一个仓库的简单信息的页面，这个页面的主要是用来告诉你如何通过git来关联远程仓库的，也就是你的zhangsan.github.io这个仓库。完成这步以后我们就该在本地环境下搭建博客了.</li>
+</ol>
+<h3 id="三：Hexo安装">三：Hexo安装</h3><p>在你想安装的目录下通过终端执行如下命令(理解这个操作需要你把文章开头的git弄明白了)：</p>
+<p>我用的mac,如果你是windows系统可能不需要加前面的sudo.<br><code>sudo npm install hexo-cli -g</code>  </p>
+<p>上面的命令执行完以后再依次执行如下命令:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>hexo init <span class="xml"><span class="tag">&lt;<span class="name">filename</span>&gt;</span></span></span><br><span class="line"><span class="bullet">2. </span>cd blog</span><br><span class="line"><span class="bullet">3. </span>npm install</span><br><span class="line"><span class="bullet">4. </span>hexo server</span><br></pre></td></tr></table></figure>
+<p>上述命令依次执行完以后在浏览器输入<a href="http://0.0.0.0:4000/应该能看到hexo的雏形了" target="_blank" rel="noopener">http://0.0.0.0:4000/应该能看到hexo的雏形了</a>.</p>
+<h3 id="四：配置">四：配置</h3><p>在根目录下找到_config.yml这个文件，里面就是配置信息，这步可以网上搜索一下，基本都是一样的。</p>
+<h3 id="五：调试">五：调试</h3><p>首先发表一篇文章试一下。在命令行执行如下命令：</p>
+<p><code>hexo new &#39;A Test Article&#39;</code></p>
+<p>完了以后你会发现在source/_posts这个目录下会有你刚创建的名为“A-Test-Article.md”的文章，你所要写的文章内容就是在这个文件里操作的，可以看下我就是这么编写这篇文章的：</p>
+<p><img src="http://7xkwi7.com1.z0.glb.clouddn.com/AF6C9D7C-497D-4282-A6C4-1DB222BB7364.png" alt=""></p>
+<p>编辑完以后重启本地服务hexo server，会发现新的文章已经有了。</p>
+<h3 id="六：选择博客主题">六：选择博客主题</h3><p>如果你用默认的主题也可以，如果想选择一个其他主题可以google搜索一下”hexo 主题”,当然我使用的主题是某某人自己搞的主题，然后他把主题放到了github上，这样大家都可以使用他的主题了，也算是现代程序员的一种开源精神，github本身就开源。</p>
+<p>我们以pacman这个主题为例子，为什么用他的，因为我也是参考别人文档直接用了他的。哈哈，废话不多说，步骤如下:</p>
+<p>执行命令：</p>
+<p><code>git clone https://github.com/A-limon/pacman.git themes/pacman</code></p>
+<p>完了以后在根目录编辑配置文件_config.yml,找到theme字段,将值改为pacman,注意值的前面是有个空格的，hexo配置文件里的值都是如此。重启服务，刷新本地页面，会发现主题已经变为pacman了。</p>
+<h3 id="七：部署到github">七：部署到github</h3><p>在部署之前我们要配置一下_config.yml。在配置之前首先执行一下这个命令：</p>
+<p><code>npm install hexo-deployer-git --save</code></p>
+<p>然后把_config.yml里的deploy里的type改为git,repository改为你的github远程仓库地址,也就是第二步第三小步里的东东.看一下我的吧。你可以参考：</p>
+<p><img src="http://7xkwi7.com1.z0.glb.clouddn.com/76B27FC0-6263-4872-AEA3-FE667E07039F.png" alt=""></p>
+<p>OK,到这里我们可以部署了，执行如下命令:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo <span class="keyword">generate</span> <span class="comment">//这步是生成静态文件，都存放在public目录下的,你真正部署到github上的也就是这个目录下的文件</span></span><br><span class="line">hexo deploy <span class="comment">//这个命令是部署到github仓库</span></span><br></pre></td></tr></table></figure>
+<p>现在刷新你的github仓库，会发现里面存的就是你本地public目录下的文件。</p>
+<p>执行完上述以后，在浏览器输入<a href="http://username.github.io（username换成你的github账户名），会发现和你本地显示的是一样的。如果当时没出现，请过几分钟再试，如果还是不行就要重头查找原因了。" target="_blank" rel="noopener">http://username.github.io（username换成你的github账户名），会发现和你本地显示的是一样的。如果当时没出现，请过几分钟再试，如果还是不行就要重头查找原因了。</a></p>
+<h3 id="八：线上测试">八：线上测试</h3><p>再发表一篇文章到线上，执行hexo new ‘Article name’,生成一篇新文章，然后编辑文章。最后依次执行第七步的那几个命令：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo <span class="keyword">generate</span> </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>上述命令也可以简化成: hexo d -g.</p>
+<p>再刷新线上页面，如果文章添加成功，那么我们已经顺利的用hexo搭建了一个静态博客了。</p>
+<h3 id="九：补充">九：补充</h3><p>到现在我们已经用hexo顺利的部署了一个静态博客了，当然虽说静态，但也算是一高逼格的东西。剩下的是对上述的一个补充。</p>
+<p>你可能需要一些比如：绑定独立域名、搜索、标签页、分类页、404页面、第三方插件的功能，这些东西完全可以自己查找修改，只要你完成了前八步，并且顺利运行，剩下的都是可劲儿折腾就行了。</p>
+<p>这里附上一些相关资料，以供查阅：</p>
+<ol>
+<li>hexo博客的优化技巧：<a href="http://zipperary.com/2013/06/02/hexo-guide-5/" target="_blank" rel="noopener">http://zipperary.com/2013/06/02/hexo-guide-5/</a></li>
+<li>第三方插件：<a href="http://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/third-party-services.html</a></li>
+</ol>
+<p>发表文章时要用到markdown语法，可以参考：</p>
+<p><a href="http://www.jianshu.com/p/q81RER" target="_blank" rel="noopener">http://www.jianshu.com/p/q81RER</a></p>
+<h4 id="以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。">以上就是我个人搭建hexo博客的一些经验，如有不正确的欢迎指正我，谢谢。</h4></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/05/用hexo新搞了一个个人博客/" itemprop="url">
+                用hexo新搞了一个个人博客
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-09-05T14:01:16+08:00" content="2014-09-05">
+            2014-09-05
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/关于博客/" itemprop="url" rel="index">
+                  <span itemprop="name">关于博客</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/09/05/用hexo新搞了一个个人博客/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/05/用hexo新搞了一个个人博客/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="hexo搭建个人博客参考文档">hexo搭建个人博客参考文档</h3><p>hexo官方文档:<a href="https://hexo.io/docs/" target="_blank" rel="noopener">https://hexo.io/docs/</a></p>
+<p>1.此篇文章的主要参考的重点是 “github pages”,当然玩转github的可以忽略，附上链接:<br>    <a href="http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html" target="_blank" rel="noopener">http://www.pchou.info/web-build/2014/07/04/build-github-blog-page-08.html</a>.<br>2.参考陈素封·独立写生的如何用hexo搭建独立博客:<br>    <a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="noopener">如何用hexo搭建个人博客</a>。<br>3.参考飞雪无情的博客（使用Hexo在Github上搭建自己的博客）:<br>    <a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="noopener">使用Hexo在Github上搭建自己的博客</a>。</p>
+<p>当然了，搭建完成后需要发表一篇文章或者图片，那就需要先掌握一些markdown的语法了，参考:<a href="http://www.appinn.com/markdown/" target="_blank" rel="noopener">http://www.appinn.com/markdown/</a></p>
+<p><strong>当然以上只是参考文档，并不能完全按照某一文档顺利搭建成功，我个人的搭建方法待时间充足时会做整理！！！</strong></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/09/05/图片/" itemprop="url">
                 可爱的猫咪
               </a>
@@ -227,7 +598,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://7xkwi7.com1.z0.glb.clouddn.com/20130911121417fw1038.jpg" rel="gallery_cjsbz0ime0009tgs6izfh57zb" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xkwi7.com1.z0.glb.clouddn.com/20130911121417fw1038.jpg" rel="gallery_cjsdajhx3000gp5s6s48fskut" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xkwi7.com1.z0.glb.clouddn.com/20130911121417fw1038.jpg" itemprop="contentUrl">
               </a>
             
@@ -302,21 +673,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
